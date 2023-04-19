@@ -92,6 +92,9 @@ def fire(Player, position)
 Interface class:
 @game: Game class object
 
+def create_game(players, board_size, ship_sizes)
+# creats the game class object after receiving input from user
+
 def place_ships
 # has all players fill up their boards with sizes given by game
 # returns nothing
