@@ -51,4 +51,25 @@ RSpec.describe Player do
       player.check_for_ship_collisions(ship)
     ).to eq false
   end
+
+  context 'shoot_at returns correct value' do
+    player_1 = Player.new("Mike", 3, [2])
+    player_2 = Player.new("Steve", 3, [2])
+    player_1.place_ships
+    player_2.place_ships
+
+    it 'returns hit if ship is hit' do
+      shot_position = [2, "c"]
+      expect(
+        player_1.shoot_at(player_2, shot_position)
+      ).to eq "Hit"
+    end
+
+    it 'returns miss if no ship at chose location' do
+      shot_position = [2, "a"]
+      expect(
+        player_1.shoot_at(player_2, shot_position)
+      ).to eq "Miss"
+    end
+  end
 end

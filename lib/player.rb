@@ -82,4 +82,16 @@ class Player
     end
     return true
   end
+
+  def shoot_at(player, position)
+    # type checks variable at given position on an opponents board
+    # returns true if that variable is a Ship, miss otherwise
+    # TODO implement a Sunk value check
+    return player.check_at_position(position).is_a?(Ship) ? "Hit" : "Miss"
+  end
+
+  def check_at_position(position)
+    # type checks variable at given position on self board and returns it
+    return @board[position[0] - 1][position[1].ord - 97]
+  end
 end
