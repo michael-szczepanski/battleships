@@ -24,6 +24,14 @@ RSpec.describe Player do
     player = Player.new("Mike", 5, [])
     expect(
       player.draw_board
-    ).to eq "   A B C D E\n  -----------\n1 | | | | | |\n  -----------\n2 | | | | | |\n  -----------\n3 | | | | | |\n  -----------\n4 | | | | | |\n  -----------\n5 | | | | | |\n  -----------\n"
+    ).to eq "   a b c d e\n  -----------\n1 | | | | | |\n  -----------\n2 | | | | | |\n  -----------\n3 | | | | | |\n  -----------\n4 | | | | | |\n  -----------\n5 | | | | | |\n  -----------\n"
+  end
+
+  it 'adds ships to board' do
+    player = Player.new("Mike", 3, [2])
+    player.place_ships
+    expect(
+      player.draw_board
+    ).to eq "   a b c\n  -------\n1 | | | |\n  -------\n2 | |S|S|\n  -------\n3 | | | |\n  -------\n"
   end
 end

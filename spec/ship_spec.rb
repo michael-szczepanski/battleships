@@ -4,9 +4,9 @@ RSpec.describe Ship do
   it 'it initializes correctly' do
     ship_size = 2
     position = [0,0]
-    orientation = "horizontal"
+    horizontal = true
     expect(
-      Ship.new(ship_size, position, orientation)
+      Ship.new(ship_size, position, horizontal)
     ).to be
   end
 end
