@@ -52,7 +52,7 @@ RSpec.describe Player do
     ).to eq false
   end
 
-  context 'shoot_at returns correct value' do
+  context '=> shoot_at returns correct value' do
     player_1 = Player.new("Mike", 3, [2])
     player_2 = Player.new("Steve", 3, [2])
     player_1.place_ships
@@ -71,5 +71,19 @@ RSpec.describe Player do
         player_1.shoot_at(player_2, shot_position)
       ).to eq "Miss"
     end
+  end
+
+  it 'returns shot history as an array' do
+    player_1 = Player.new("Mike", 3, [2])
+    player_2 = Player.new("Steve", 3, [2])
+    player_1.place_ships
+    player_2.place_ships
+    position_1 = [2, "a"]
+    position_2 = [2, "c"]
+    player_1.shoot_at(player_2, position_1)
+    player_1.shoot_at(player_2, position_2)
+    expect(
+      player_1.shot_history
+    ).to eq({player_2=>[{:result=>"Miss",:position=>position_1},{:result=>"Hit",:position=>position_2}]})
   end
 end

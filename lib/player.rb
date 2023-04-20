@@ -1,13 +1,14 @@
 require './lib/ship.rb'
 
 class Player
-  attr_reader :ships
+  attr_reader :ships, :shot_history
 
   def initialize(name, board_size, ship_sizes)
     @name = name
     @ship_sizes = ship_sizes
     @ships = []
     @board = create_board(board_size)
+    @shot_history = {}
   end
 
   def place_ships()
@@ -87,7 +88,16 @@ class Player
     # type checks variable at given position on an opponents board
     # returns true if that variable is a Ship, miss otherwise
     # TODO implement a Sunk value check
-    return player.check_at_position(position).is_a?(Ship) ? "Hit" : "Miss"
+    # TODO shoot history
+    result = player.check_at_position(position).is_a?(Ship) ? "Hit" : "Miss"
+
+    if @shot_history[player] == nil
+      @shot_history[player] = [{:result=>result, :position=>position}]
+    else
+      @shot_history[player] << {:result=>result, :position=>position}
+    end
+
+    return result
   end
 
   def check_at_position(position)

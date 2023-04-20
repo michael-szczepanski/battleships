@@ -1,6 +1,6 @@
 require './lib/player.rb'
 
-player = Player.new("Mike", 10, [4])
+player = Player.new("Mike", 10, [5])
 player.place_ships
 puts "Board:"
 puts player.draw_board
