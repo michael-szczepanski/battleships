@@ -3,23 +3,24 @@ require './lib/ship.rb'
 class Player
   def initialize(name, board_size, ship_sizes)
     @name = name
-    @ships = ship_sizes
+    @ship_sizes = ship_sizes
+    @ships = []
     @board = create_board(board_size)
   end
 
   def place_ships()
     # iterates through the list of ship sizes and mutates it into
     # a list of Ship objects at correct positions and size
-    @ships.map! do |ship_size|
+    @ship_sizes.each do |ship_size|
       position = [2,"b"]
       horizontal = true
       # create ship object
       ship = Ship.new(ship_size, position, horizontal)
       ship_size.times do
-        @board[position[0] - 1][position[1].ord - 97] = 'S'
+        @board[position[0] - 1][position[1].ord - 97] = ship
         horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
       end
-      ship_size = ship
+      @ships << ship
     end
     return "#{@name} has finished placing ships."
   end

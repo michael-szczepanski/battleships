@@ -32,6 +32,6 @@ RSpec.describe Player do
     player.place_ships
     expect(
       player.draw_board
-    ).to eq "   a b c\n  -------\n1 | | | |\n  -------\n2 | |S|S|\n  -------\n3 | | | |\n  -------\n"
+    ).to eq "   a b c\n  -------\n1 | | | |\n  -------\n2 | |2|2|\n  -------\n3 | | | |\n  -------\n"
   end
 end

@@ -4,4 +4,8 @@ class Ship
     @position = position
     @horizontal = true
   end
+
+  def to_s
+    return "#{@size}"
+  end
 end
