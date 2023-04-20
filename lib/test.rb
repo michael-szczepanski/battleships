@@ -1,8 +1,12 @@
 require './lib/player.rb'
 
-player = Player.new("Mike", 10, [5])
-player.place_ships
-puts "Board:"
-puts player.draw_board
-puts "Ships:"
-print player.ships
+player_1 = Player.new("Mike", 6, [4])
+player_2 = Player.new("Steve", 6, [4])
+player_1.place_ships
+player_2.place_ships
+position_1 = [4, "b"]
+position_2 = [2, "d"]
+player_1.shoot_at(player_2, position_1)
+player_1.shoot_at(player_2, position_2)
+
+puts player_1.draw_shot_history(player_2)

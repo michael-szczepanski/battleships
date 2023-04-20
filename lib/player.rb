@@ -7,8 +7,9 @@ class Player
     @name = name
     @ship_sizes = ship_sizes
     @ships = []
-    @board = create_board(board_size)
+    @board_size = board_size
     @shot_history = {}
+    @board = create_board(board_size)
   end
 
   def place_ships()
@@ -103,5 +104,18 @@ class Player
   def check_at_position(position)
     # type checks variable at given position on self board and returns it
     return @board[position[0] - 1][position[1].ord - 97]
+  end
+
+  def draw_shot_history(player)
+    history_board = create_board(@board_size)
+    @shot_history[player].each do |shot|
+      result = shot[:result]
+      history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = (result == "Hit" ? "H" : "M") 
+    end
+    return "Shots at #{player.to_s}:\n#{draw_board(history_board)}"
+  end
+
+  def to_s()
+    return @name
   end
 end
