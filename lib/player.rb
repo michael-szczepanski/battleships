@@ -1,6 +1,8 @@
 require './lib/ship.rb'
 
 class Player
+  attr_reader :ships
+
   def initialize(name, board_size, ship_sizes)
     @name = name
     @ship_sizes = ship_sizes
@@ -16,6 +18,9 @@ class Player
       horizontal = true
       # create ship object
       ship = Ship.new(ship_size, position, horizontal)
+      # TODO implement method checks once user input is implemented
+      # fail "Collided with ship" if check_for_ship_collisions(ship)
+      # fail "Collided with boundary" if check_for_boundary_collisions(ship)
       ship_size.times do
         @board[position[0] - 1][position[1].ord - 97] = ship
         horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
@@ -52,7 +57,28 @@ class Player
     return board_string
   end
 
-  def ships()
-    return @ships
+  def check_for_ship_collisions(ship)
+    # checks if there is an existing ship or if the ship is out of bounds
+    # returns true if there are no collisions, or false otherwise
+    position = ship.position # [1, "a"]
+    horizontal = ship.horizontal
+    ship.size.times do
+      return false if @board[position[0] - 1][position[1].ord - 97].is_a? Ship
+      horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
+    end
+    return true
+  end
+
+  def check_for_boundary_collisions(ship)
+    # checks if the ship has collided with the boundary of the game field
+    # return true if there are no collisions, or false otherwise
+    position = ship.position # [1, "a"]
+    horizontal = ship.horizontal
+    ship.size.times do
+      return false if position[0] - 1 >= @board.size
+      return false if position[1].ord - 97 >= @board[position[0] - 1].size
+      horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
+    end
+    return true
   end
 end

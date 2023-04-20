@@ -34,4 +34,21 @@ RSpec.describe Player do
       player.draw_board
     ).to eq "   a b c\n  -------\n1 | | | |\n  -------\n2 | |2|2|\n  -------\n3 | | | |\n  -------\n"
   end
+
+  it 'checks for collisions with stage boundary' do
+    player = Player.new("Mike", 3, [2])
+    ship = double :Ship, position: [2, "b"], horizontal: true, size: 4
+    expect(
+      player.check_for_boundary_collisions(ship)
+    ).to eq false
+  end
+
+  it 'checks for collisions with other ships' do
+    player = Player.new("Mike", 3, [2])
+    player.place_ships
+    ship = double :Ship, position: [2, "b"], horizontal: true, size: 2
+    expect(
+      player.check_for_ship_collisions(ship)
+    ).to eq false
+  end
 end

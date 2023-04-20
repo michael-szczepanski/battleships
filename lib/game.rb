@@ -27,8 +27,4 @@ class Game
     end
     return players
   end
-
-  def ship_sizes()
-    return @ship_sizes
-  end
 end
