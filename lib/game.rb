@@ -7,7 +7,7 @@ class Game
     @ship_sizes = ship_sizes
   end
 
-  def place_ships
+  def place_ships()
     @players.each { |player| player.place_ships }
   end
 

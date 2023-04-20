@@ -9,7 +9,7 @@ class Interface
     @game = Game.new(players, board_size, ship_sizes)
   end
 
-  def game
+  def game()
     return @game
   end
 end

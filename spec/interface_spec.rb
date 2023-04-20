@@ -18,6 +18,6 @@ RSpec.describe Interface do
     interface.create_game(players, board_size, ship_sizes)
     expect(
       interface.game.place_ships
-    ).to eq "Placing ships complete"
+    ).to eq []
   end
 end
