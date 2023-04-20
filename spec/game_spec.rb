@@ -1,4 +1,4 @@
-require 'game'
+require './lib/game.rb'
 
 RSpec.describe Game do
   it 'it initializes' do
@@ -17,6 +17,6 @@ RSpec.describe Game do
     game = Game.new(players, board_size, ship_sizes)
     expect(
       game.place_ships
-    ).to eq []
+    ).to eq "All players have finished placing their ships"
   end
 end
