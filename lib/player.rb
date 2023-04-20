@@ -35,22 +35,22 @@ class Player
     return Array.new(size) { Array.new(size) {" "} }
   end
 
-  def draw_board()
+  def draw_board(board = @board)
     # Draws a board based on the @board variable
     # Returns the board in the form of a string
-    offset = @board.size.to_s.length + 1 # offset based on the length of longest row number
+    offset = board.size.to_s.length + 1 # offset based on the length of longest row number
     board_string = " ".center(offset)
-    divider = "#{" ".center(offset)}#{'-' * (@board[0].size * 2 + 1)}\n"
+    divider = "#{" ".center(offset)}#{'-' * (board[0].size * 2 + 1)}\n"
     column_counter = 97 # 'a'
 
-    @board[0].size.times do
+    board[0].size.times do
       board_string << " #{column_counter.chr}"
       column_counter += 1
     end
 
     board_string << "\n#{divider}"
 
-    @board.each_with_index do |row, index|
+    board.each_with_index do |row, index|
       board_string << "#{(index + 1).to_s.center(offset)}|#{row.join("|")}|\n"
       board_string << divider
     end
