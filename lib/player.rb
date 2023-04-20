@@ -18,7 +18,7 @@ class Player
       horizontal = true
       # create ship object
       ship = Ship.new(ship_size, position, horizontal)
-      # TODO implement method checks once user input is implemented
+      # TODO implement method checks for collissions once user input is implemented
       # fail "Collided with ship" if check_for_ship_collisions(ship)
       # fail "Collided with boundary" if check_for_boundary_collisions(ship)
       ship_size.times do
@@ -38,8 +38,9 @@ class Player
   def draw_board()
     # Draws a board based on the @board variable
     # Returns the board in the form of a string
-    board_string = "  "
-    divider = "  #{'-' * (@board[0].size * 2 + 1)}\n"
+    offset = @board.size.to_s.length + 1 # offset based on the length of longest row number
+    board_string = " ".center(offset)
+    divider = "#{" ".center(offset)}#{'-' * (@board[0].size * 2 + 1)}\n"
     column_counter = 97 # 'a'
 
     @board[0].size.times do
@@ -50,7 +51,7 @@ class Player
     board_string << "\n#{divider}"
 
     @board.each_with_index do |row, index|
-      board_string << "#{index + 1} |#{row.join("|")}|\n"
+      board_string << "#{(index + 1).to_s.center(offset)}|#{row.join("|")}|\n"
       board_string << divider
     end
 
