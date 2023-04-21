@@ -3,18 +3,18 @@ require './lib/game.rb'
 class IOHandler
   class << self
 
-    def prompt_for_player_count
-      puts "Please enter the player count"
+    def prompt_for_player_count(io = Kernel)
+      io.puts "Please enter the player count"
       return get_player_count
     end
 
-    def get_player_count
-      number = gets.chomp
-      if number == number.to_i.to_s && number.to_i > 0
+    def get_player_count(io = Kernel)
+      number = io.gets.chomp
+      if number == number.to_i.to_s && number.to_i > 1
         return number
       else
-        puts "Please enter an integer higher than 0 for player count"
-        prompt_for_player_count
+        io.puts "Please enter an integer higher than 1 for player count"
+        prompt_for_player_count(io)
       end
     end
 
@@ -34,7 +34,7 @@ class IOHandler
     end
 
     def prompt_for_shot(player)
-      puts "Which opponent would you like to shoot at?"
+      puts "#{player.name}: Which opponent would you like to shoot at?"
       opponent = gets.chomp
       position = get_shot_position
       return [opponent, position]
@@ -43,12 +43,20 @@ class IOHandler
     def get_shot_position()
       puts "What position would you like to shoot at? e.g. 1 a"
       position = gets.chomp
-      if !position.matches?(/^\d*\s\w$/)
+      if !position.match?(/^\d*\s\w$/)
         puts "Position format invalid, please use a '1 a' format"
         get_shot_position
       else
         return position.split(" ")
       end
+    end
+
+    def prompt_for_winner(player)
+      puts "#{player.name} has won the game!"
+    end
+
+    def get_shot_result(player, opponent, result)
+      puts "#{player.to_s} shot at #{opponent.to_s} and #{result}"
     end
   end
 end

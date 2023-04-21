@@ -40,7 +40,7 @@ RSpec.describe Game do
       game.check_for_winner
       expect(
         game.players
-      ).to eq []
+      ).to eq [nil, nil]
     end
     it 'returns the winner if only one player left alive' do
       players = 1

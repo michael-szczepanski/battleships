@@ -108,10 +108,15 @@ class Player
     # type checks variable at given position on self board
     # if hit, decrement from @hit_points and return "Hit" if @hit_points are above 0 or "Sunk" otherwise
     # return "Miss" if there was no ship on that place on the board
-    board_position = @board[position[0] - 1][position[1].ord - 97]
-    return "Miss" if !board_position.is_a?(Ship)
-    board_position.hit_points -= 1
-    return board_position.hit_points == 0 ? "Sunk" : "Hit"
+    at_position = @board[position[0].to_i - 1][position[1].ord - 97]
+    return "Miss" if !at_position.is_a?(Ship)
+    at_position.hit_points -= 1
+
+    if at_position.hit_points == 0
+      @ships[@ships.index(at_position)] = nil
+    end
+
+    return at_position.hit_points == 0 ? "Sunk" : "Hit"
   end
 
   def draw_shot_history(player)

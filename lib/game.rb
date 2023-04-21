@@ -24,11 +24,13 @@ class Game
     # Creates player objects based on the count provided by the initializer
     # Returns nothing
     players = []
+    counter = 1
     players_count.times do
       @io_handler
-      name = "player"
+      name = "player #{counter}"
       player = Player.new(name, @board_size, @ship_sizes)
       players << player
+      counter += 1
     end
     return players
   end
@@ -36,14 +38,14 @@ class Game
   def check_for_winner()
     # TODO return a string to signal a player losing the game
     # checks for any players that have no ships left in their array and removes those from the player list
-    count = 0
-    while count < @players.size
-      if @players[count].ships.empty?
-        @players.delete(@players[count])
-      else
-        count += 1
+
+    @players.each do |player|
+      next if player == nil
+      if player.ships.compact.size == 0
+        @players[@players.index(player)] = nil
       end
     end
-    return @players[0] if @players.size == 1
+
+    return @players.compact.size == 1 ? @players.compact[0] : nil
   end
 end
