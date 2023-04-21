@@ -87,14 +87,16 @@ class Player
 
   def shoot_at(player, position)
     # type checks variable at given position on an opponents board
-    # returns true if that variable is a Ship, miss otherwise
+    # returns false if shot has already been taken
+    # returns Hit if that variable is a Ship, Miss otherwise
     # TODO implement a Sunk value check
-    # TODO shoot history
+    
     result = player.check_at_position(position).is_a?(Ship) ? "Hit" : "Miss"
 
     if @shot_history[player] == nil
       @shot_history[player] = [{:result=>result, :position=>position}]
     else
+      return false if @shot_history[player].include?({:result=>result, :position=>position})
       @shot_history[player] << {:result=>result, :position=>position}
     end
 

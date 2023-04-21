@@ -9,4 +9,5 @@ position_2 = [2, "d"]
 player_1.shoot_at(player_2, position_1)
 player_1.shoot_at(player_2, position_2)
 
+puts player_1.draw_board
 puts player_1.draw_shot_history(player_2)

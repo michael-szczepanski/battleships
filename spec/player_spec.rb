@@ -71,6 +71,14 @@ RSpec.describe Player do
         player_1.shoot_at(player_2, shot_position)
       ).to eq "Miss"
     end
+
+    it 'returns false for duplicate shots' do
+      shot_position = [2, "c"]
+      player_1.shoot_at(player_2, shot_position)
+      expect(
+        player_1.shoot_at(player_2, shot_position)
+      ).to eq false
+    end
   end
 
   context '=> shot history implementation' do
