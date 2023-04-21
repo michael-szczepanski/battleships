@@ -89,9 +89,8 @@ class Player
     # type checks variable at given position on an opponents board
     # returns false if shot has already been taken
     # returns Hit if that variable is a Ship, Miss otherwise
-    # TODO implement a Sunk value check
     
-    result = player.check_at_position(position).is_a?(Ship) ? "Hit" : "Miss"
+    result = player.check_at_position(position)
 
     if @shot_history[player] == nil
       @shot_history[player] = [{:result=>result, :position=>position}]
@@ -104,15 +103,27 @@ class Player
   end
 
   def check_at_position(position)
-    # type checks variable at given position on self board and returns it
-    return @board[position[0] - 1][position[1].ord - 97]
+    # type checks variable at given position on self board
+    # if hit, decrement from @hit_points and return "Hit" if @hit_points are above 0 or "Sunk" otherwise
+    # return "Miss" if there was no ship on that place on the board
+    board_position = @board[position[0] - 1][position[1].ord - 97]
+    return "Miss" if !board_position.is_a?(Ship)
+    board_position.hit_points -= 1
+    return board_position.hit_points == 0 ? "Sunk" : "Hit"
   end
 
   def draw_shot_history(player)
+    # TODO update @shot_history so that it can dispplay sunk ships correctly
     history_board = create_board(@board_size)
     @shot_history[player].each do |shot|
-      result = shot[:result]
-      history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = (result == "Hit" ? "H" : "M") 
+      case shot[:result]
+      when "Hit"
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "h"
+      when "Miss"
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "m"
+      when "Sunk"
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "s"
+      end
     end
     return "Shots at #{player.to_s}:\n#{draw_board(history_board)}"
   end

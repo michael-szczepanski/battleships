@@ -79,6 +79,17 @@ RSpec.describe Player do
         player_1.shoot_at(player_2, shot_position)
       ).to eq false
     end
+
+    it 'returns sunk after the final hit on a ship' do
+      player_1 = Player.new("Mike", 3, [2])
+      player_2 = Player.new("Steve", 3, [2])
+      player_1.place_ships
+      player_2.place_ships
+      player_1.shoot_at(player_2, [2, "b"])
+      expect(
+        player_1.shoot_at(player_2, [2, "c"])
+      ).to eq "Sunk"
+    end
   end
 
   context '=> shot history implementation' do
@@ -107,7 +118,7 @@ RSpec.describe Player do
       player_1.shoot_at(player_2, position_2)
       expect(
         player_1.draw_shot_history(player_2)
-      ).to eq "Shots at Steve:\n   a b c\n  -------\n1 | | | |\n  -------\n2 |M| |H|\n  -------\n3 | | | |\n  -------\n"
+      ).to eq "Shots at Steve:\n   a b c\n  -------\n1 | | | |\n  -------\n2 |m| |h|\n  -------\n3 | | | |\n  -------\n"
     end
   end
 end
