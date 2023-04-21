@@ -38,6 +38,8 @@ class Player
   end
 
   def draw_board(board = @board)
+    # TODO make a draw a rectangular one
+    # TODO mark players own ships as sunk when drawing their own board
     # Draws a board based on the @board variable
     # Returns the board in the form of a string
     offset = board.size.to_s.length + 1 # offset based on the length of longest row number

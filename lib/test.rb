@@ -1,7 +1,7 @@
 require './lib/player.rb'
 
-player_1 = Player.new("Mike", 4, [2])
-player_2 = Player.new("Steve", 4, [2])
+player_1 = Player.new("Mike", 7, [2])
+player_2 = Player.new("Steve", 7, [2])
 player_1.place_ships
 player_2.place_ships
 position_1 = [4, "b"]

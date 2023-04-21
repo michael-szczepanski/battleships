@@ -1,6 +1,8 @@
 require './lib/player.rb'
 
 class Game
+  attr_reader :players
+
   def initialize(players, board_size, ship_sizes)
     @ship_sizes = ship_sizes
     @board_size = board_size
@@ -26,5 +28,18 @@ class Game
       players << player
     end
     return players
+  end
+
+  def check_for_alive_players()
+    # TODO return a string to signal a player losing the game
+    # checks for any players that have no ships left in their array and removes those from the player list
+    count = 0
+    while count < @players.size
+      if @players[count].ships.empty?
+        @players.delete(@players[count])
+      else
+        count += 1
+      end
+    end
   end
 end

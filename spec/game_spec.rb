@@ -19,4 +19,28 @@ RSpec.describe Game do
       game.place_ships
     ).to eq "All players have finished placing their ships"
   end
+
+  context 'removes players with no ships from the game' do
+    it 'all players left alive' do
+      players = 2
+      board_size = 5
+      ship_sizes = [1,1,2,3,3]
+      game = Game.new(players, board_size, ship_sizes)
+      game.place_ships
+      game.check_for_alive_players
+      expect(
+        game.players
+      ).to eq [game.players[0], game.players[1]]
+    end
+    it 'all players dead' do
+      players = 2
+      board_size = 5
+      ship_sizes = [1,1,2,3,3]
+      game = Game.new(players, board_size, ship_sizes)
+      game.check_for_alive_players
+      expect(
+        game.players
+      ).to eq []
+    end
+  end
 end
