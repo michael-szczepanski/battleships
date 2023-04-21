@@ -1,5 +1,4 @@
 require './lib/game.rb'
-require './lib/kernel.'
 
 # Ideas
 # TODO Implement a -1 and +1 board for subs and planes
@@ -9,7 +8,7 @@ require './lib/kernel.'
 class Interface
   attr_reader :game
 
-  def initialize(io_handler = Kernel)
+  def initialize(io_handler = IOHandler)
     @io_handler = io_handler
     @game
     @game_finished = false
@@ -20,17 +19,15 @@ class Interface
   end
 
   def run()
-    @io_handler.prompt_for_player_count
-    players = @io_handler.get_player_count
-    @io_handler.prompt_for_board_size
-    board_size = @io_handler.get_board_size
+    players = @io_handler.prompt_for_player_count
+    board_size = @io_handler.prompt_for_board_size
     ship_sizes = generate_ship_sizes(board_size)
     create_game(players, board_size, ship_sizes)
     @game.place_ships
     
     while !@game_finished
       @game.players.each do |player|
-        @io_handler.prompt_for_shot(player)
+        shot = @io_handler.prompt_for_shot(player)
         result = @game.check_for_winner
         if result.is_a?(Player)
           @io_handler.prompt_for_winner(result)

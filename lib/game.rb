@@ -6,7 +6,8 @@ class Game
   def initialize(players, board_size, ship_sizes)
     @ship_sizes = ship_sizes
     @board_size = board_size
-    @players = create_players(players)
+    @players = create_players(players.to_i)
+    @io_handler = IOHandler
   end
 
   def place_ships()
@@ -24,6 +25,7 @@ class Game
     # Returns nothing
     players = []
     players_count.times do
+      @io_handler
       name = "player"
       player = Player.new(name, @board_size, @ship_sizes)
       players << player

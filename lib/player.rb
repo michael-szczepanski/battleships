@@ -9,7 +9,7 @@ class Player
     @ships = []
     @board_size = board_size
     @shot_history = {}
-    @board = create_board(board_size)
+    @board = create_board(board_size.to_i)
   end
 
   def place_ships()

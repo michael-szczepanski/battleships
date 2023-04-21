@@ -27,12 +27,10 @@ RSpec.describe Interface do
     io_handler = double :IOHandler
     player_1_dbl = double :Player
 
-    expect(io_handler).to receive(:prompt_for_player_count)
-    expect(io_handler).to receive(:get_player_count).and_return(1)
-    expect(io_handler).to receive(:prompt_for_board_size)
-    expect(io_handler).to receive(:get_board_size).and_return(5)
-    allow(io_handler).to receive(:prompt_for_shot)
-    allow(io_handler).to receive(:prompt_for_winner)
+    expect(io_handler).to receive(:prompt_for_player_count).and_return(1)
+    expect(io_handler).to receive(:prompt_for_board_size).and_return(4)
+    expect(io_handler).to receive(:prompt_for_shot)
+    expect(io_handler).to receive(:prompt_for_winner)
 
     interface = Interface.new(io_handler)
     expect(
