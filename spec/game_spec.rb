@@ -27,7 +27,7 @@ RSpec.describe Game do
       ship_sizes = [1,1,2,3,3]
       game = Game.new(players, board_size, ship_sizes)
       game.place_ships
-      game.check_for_alive_players
+      game.check_for_winner
       expect(
         game.players
       ).to eq [game.players[0], game.players[1]]
@@ -37,10 +37,19 @@ RSpec.describe Game do
       board_size = 5
       ship_sizes = [1,1,2,3,3]
       game = Game.new(players, board_size, ship_sizes)
-      game.check_for_alive_players
+      game.check_for_winner
       expect(
         game.players
       ).to eq []
+    end
+    it 'returns the winner if only one player left alive' do
+      players = 1
+      board_size = 5
+      ship_sizes = [1]
+      game = Game.new(players, board_size, ship_sizes)
+      expect(
+        game.check_for_winner
+      ).to eq game.players[0]
     end
   end
 end

@@ -30,7 +30,7 @@ class Game
     return players
   end
 
-  def check_for_alive_players()
+  def check_for_winner()
     # TODO return a string to signal a player losing the game
     # checks for any players that have no ships left in their array and removes those from the player list
     count = 0
@@ -41,5 +41,6 @@ class Game
         count += 1
       end
     end
+    return @players[0] if @players.size == 1
   end
 end
