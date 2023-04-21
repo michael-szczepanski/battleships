@@ -10,6 +10,7 @@ class Game
   end
 
   def place_ships()
+    # TODO clear terminal after each player is done placing their ships
     # runs placing methods on each player initialized
     # returns confirmation string
     @players.each do |player|

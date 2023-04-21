@@ -1,7 +1,7 @@
 require './lib/ship.rb'
 
 class Player
-  attr_reader :ships, :shot_history
+  attr_reader :ships, :shot_history, :name
 
   def initialize(name, board_size, ship_sizes)
     @name = name
