@@ -30,6 +30,10 @@ class Interface
       @game.players.each do |player|
         next if player == nil
         
+        # This will prompt the player for commands until the player chooses to make a shot at an opponent
+        @io_handler.prompt_for_commands(player)
+        
+        # This will process the shot at opponent
         opponent = false
         while opponent == false
           shot = @io_handler.prompt_for_shot(player)
@@ -39,6 +43,7 @@ class Interface
         @io_handler.get_shot_result(player, opponent, result)
         winner = @game.check_for_winner
 
+        # Check if the game has a winner
         if winner.is_a?(Player)
           @io_handler.prompt_for_winner(winner)
           @game_finished = true

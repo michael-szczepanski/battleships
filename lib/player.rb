@@ -121,6 +121,7 @@ class Player
 
   def draw_shot_history(player)
     # TODO update @shot_history so that it can dispplay sunk ships correctly
+    # TODO print all boards for players that this player has shot at
     history_board = create_board(@board_size)
     @shot_history[player].each do |shot|
       case shot[:result]

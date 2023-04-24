@@ -28,10 +28,12 @@ RSpec.describe Interface do
     player_1_dbl = double :Player
     player_2_dbl = double :Player
 
-    expect(io_handler).to receive(:prompt_for_player_count).and_return(1)
+    expect(io_handler).to receive(:prompt_for_player_count).and_return(2)
     expect(io_handler).to receive(:prompt_for_board_size).and_return(4)
-    expect(io_handler).to receive(:prompt_for_shot).and_return([player_2_dbl, [1, "a"]])
-    expect(io_handler).to receive(:prompt_for_winner)
+    expect(io_handler).to receive(:prompt_for_commands).and_return("shoot")
+    # TODO Implement a way to inject a list of doubles in place of @players in the Interface.Game object
+    expect(io_handler).to receive(:prompt_for_shot).with(player_1_dbl)
+    # expect(io_handler).to receive(:prompt_for_winner)
 
     interface = Interface.new(io_handler)
     expect(

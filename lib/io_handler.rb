@@ -5,7 +5,7 @@ class IOHandler
 
     def prompt_for_player_count(io = Kernel)
       io.puts "Please enter the player count"
-      return get_player_count
+      return get_player_count(io)
     end
 
     def get_player_count(io = Kernel)
@@ -33,8 +33,8 @@ class IOHandler
       end
     end
 
-    def prompt_for_shot(player)
-      puts "#{player.name}: Which opponent would you like to shoot at?"
+    def prompt_for_shot(player, io = Kernel)
+      io.puts "#{player.name}: Which opponent would you like to shoot at?"
       opponent = gets.chomp
       position = get_shot_position
       return [opponent, position]
@@ -57,6 +57,11 @@ class IOHandler
 
     def get_shot_result(player, opponent, result)
       puts "#{player.to_s} shot at #{opponent.to_s} and #{result}"
+    end
+
+    def prompt_for_commands(player)
+      # TODO implement Shot History, list of Players, Shoot
+      puts "What would you like to do?"
     end
   end
 end
