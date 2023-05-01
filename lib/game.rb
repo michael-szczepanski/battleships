@@ -1,4 +1,6 @@
-require './lib/player.rb'
+# frozen_string_literal: true
+
+require './lib/player'
 
 class Game
   attr_reader :players
@@ -10,14 +12,12 @@ class Game
     @io_handler = IOHandler
   end
 
-  def place_ships()
-    # TODO clear terminal after each player is done placing their ships
+  def place_ships
+    # TODO: clear terminal after each player is done placing their ships
     # runs placing methods on each player initialized
     # returns confirmation string
-    @players.each do |player|
-      player.place_ships
-    end
-    return "All players have finished placing their ships"
+    @players.each(&:place_ships)
+    'All players have finished placing their ships'
   end
 
   def create_players(players_count)
@@ -32,20 +32,19 @@ class Game
       players << player
       counter += 1
     end
-    return players
+    players
   end
 
-  def check_for_winner()
-    # TODO return a string to signal a player losing the game
+  def check_for_winner
+    # TODO: return a string to signal a player losing the game
     # checks for any players that have no ships left in their array and removes those from the player list
 
     @players.each do |player|
-      next if player == nil
-      if player.ships.compact.size == 0
-        @players[@players.index(player)] = nil
-      end
+      next if player.nil?
+
+      @players[@players.index(player)] = nil if player.ships.compact.empty?
     end
 
-    return @players.compact.size == 1 ? @players.compact[0] : nil
+    @players.compact.size == 1 ? @players.compact[0] : nil
   end
 end

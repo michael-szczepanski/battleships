@@ -1,4 +1,6 @@
-require './lib/ship.rb'
+# frozen_string_literal: true
+
+require './lib/ship'
 
 class Player
   attr_reader :ships, :shot_history, :name
@@ -12,15 +14,15 @@ class Player
     @board = create_board(board_size.to_i)
   end
 
-  def place_ships()
+  def place_ships
     # iterates through the list of ship sizes and mutates it into
     # a list of Ship objects at correct positions and size
     @ship_sizes.each do |ship_size|
-      position = [2,"b"]
+      position = [2, 'b']
       horizontal = true
       # create ship object
       ship = Ship.new(ship_size, position, horizontal)
-      # TODO implement method checks for collissions once user input is implemented
+      # TODO: implement method checks for collissions once user input is implemented
       # fail "Collided with ship" if check_for_ship_collisions(ship)
       # fail "Collided with boundary" if check_for_boundary_collisions(ship)
       ship_size.times do
@@ -29,22 +31,22 @@ class Player
       end
       @ships << ship
     end
-    return "#{@name} has finished placing ships."
+    "#{@name} has finished placing ships."
   end
 
   def create_board(size)
     # Creates and returns an array of nested arrays to make a size x size matrix
-    return Array.new(size) { Array.new(size) {" "} }
+    Array.new(size) { Array.new(size) { ' ' } }
   end
 
   def draw_board(board = @board)
-    # TODO make a draw a rectangular one
+    # TODO: make a draw a rectangular one
     # TODO mark players own ships as sunk when drawing their own board
     # Draws a board based on the @board variable
     # Returns the board in the form of a string
     offset = board.size.to_s.length + 1 # offset based on the length of longest row number
-    board_string = " ".center(offset)
-    divider = "#{" ".center(offset)}#{'-' * (board[0].size * 2 + 1)}\n"
+    board_string = ' '.center(offset)
+    divider = "#{' '.center(offset)}#{'-' * (board[0].size * 2 + 1)}\n"
     column_counter = 97 # 'a'
 
     board[0].size.times do
@@ -55,11 +57,11 @@ class Player
     board_string << "\n#{divider}"
 
     board.each_with_index do |row, index|
-      board_string << "#{(index + 1).to_s.center(offset)}|#{row.join("|")}|\n"
+      board_string << "#{(index + 1).to_s.center(offset)}|#{row.join('|')}|\n"
       board_string << divider
     end
 
-    return board_string
+    board_string
   end
 
   def check_for_ship_collisions(ship)
@@ -69,9 +71,10 @@ class Player
     horizontal = ship.horizontal
     ship.size.times do
       return false if @board[position[0] - 1][position[1].ord - 97].is_a? Ship
+
       horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
     end
-    return true
+    true
   end
 
   def check_for_boundary_collisions(ship)
@@ -82,26 +85,28 @@ class Player
     ship.size.times do
       return false if position[0] - 1 >= @board.size
       return false if position[1].ord - 97 >= @board[position[0] - 1].size
+
       horizontal ? (position[1] = (position[1].ord + 1).chr) : position[0] += 1
     end
-    return true
+    true
   end
 
   def shoot_at(player, position)
     # type checks variable at given position on an opponents board
     # returns false if shot has already been taken
     # returns Hit if that variable is a Ship, Miss otherwise
-    
+
     result = player.check_at_position(position)
 
-    if @shot_history[player] == nil
-      @shot_history[player] = [{:result=>result, :position=>position}]
+    if @shot_history[player].nil?
+      @shot_history[player] = [{ result: result, position: position }]
     else
-      return false if @shot_history[player].include?({:result=>result, :position=>position})
-      @shot_history[player] << {:result=>result, :position=>position}
+      return false if @shot_history[player].include?({ result: result, position: position })
+
+      @shot_history[player] << { result: result, position: position }
     end
 
-    return result
+    result
   end
 
   def check_at_position(position)
@@ -109,34 +114,33 @@ class Player
     # if hit, decrement from @hit_points and return "Hit" if @hit_points are above 0 or "Sunk" otherwise
     # return "Miss" if there was no ship on that place on the board
     at_position = @board[position[0].to_i - 1][position[1].ord - 97]
-    return "Miss" if !at_position.is_a?(Ship)
+    return 'Miss' unless at_position.is_a?(Ship)
+
     at_position.hit_points -= 1
 
-    if at_position.hit_points == 0
-      @ships[@ships.index(at_position)] = nil
-    end
+    @ships[@ships.index(at_position)] = nil if at_position.hit_points.zero?
 
-    return at_position.hit_points == 0 ? "Sunk" : "Hit"
+    at_position.hit_points.zero? ? 'Sunk' : 'Hit'
   end
 
   def draw_shot_history(player)
-    # TODO update @shot_history so that it can dispplay sunk ships correctly
+    # TODO: update @shot_history so that it can dispplay sunk ships correctly
     # TODO print all boards for players that this player has shot at
     history_board = create_board(@board_size)
     @shot_history[player].each do |shot|
       case shot[:result]
-      when "Hit"
-        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "h"
-      when "Miss"
-        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "m"
-      when "Sunk"
-        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = "s"
+      when 'Hit'
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = 'h'
+      when 'Miss'
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = 'm'
+      when 'Sunk'
+        history_board[shot[:position][0] - 1][shot[:position][1].ord - 97] = 's'
       end
     end
-    return "Shots at #{player.to_s}:\n#{draw_board(history_board)}"
+    "Shots at #{player}:\n#{draw_board(history_board)}"
   end
 
-  def to_s()
-    return @name
+  def to_s
+    @name
   end
 end

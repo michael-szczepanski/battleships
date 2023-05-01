@@ -1,9 +1,11 @@
-require './lib/player.rb'
+# frozen_string_literal: true
+
+require './lib/player'
 
 RSpec.describe Player do
   it 'it initializes' do
-    name = "Mike"
-    ship_sizes = [1,1,2,3,3]
+    name = 'Mike'
+    ship_sizes = [1, 1, 2, 3, 3]
     board_size = 5
     expect(
       Player.new(name, board_size, ship_sizes)
@@ -11,8 +13,8 @@ RSpec.describe Player do
   end
 
   it 'place_ship method working correctly' do
-    ship_sizes = [1,1,2,3,3]
-    name = "Mike"
+    ship_sizes = [1, 1, 2, 3, 3]
+    name = 'Mike'
     board_size = 5
     player = Player.new(name, board_size, ship_sizes)
     expect(
@@ -21,14 +23,14 @@ RSpec.describe Player do
   end
 
   it 'draws board correctly' do
-    player = Player.new("Mike", 5, [])
+    player = Player.new('Mike', 5, [])
     expect(
       player.draw_board
     ).to eq "   a b c d e\n  -----------\n1 | | | | | |\n  -----------\n2 | | | | | |\n  -----------\n3 | | | | | |\n  -----------\n4 | | | | | |\n  -----------\n5 | | | | | |\n  -----------\n"
   end
 
   it 'adds ships to board' do
-    player = Player.new("Mike", 3, [2])
+    player = Player.new('Mike', 3, [2])
     player.place_ships
     expect(
       player.draw_board
@@ -36,44 +38,44 @@ RSpec.describe Player do
   end
 
   it 'checks for collisions with stage boundary' do
-    player = Player.new("Mike", 3, [2])
-    ship = double :Ship, position: [2, "b"], horizontal: true, size: 4
+    player = Player.new('Mike', 3, [2])
+    ship = double :Ship, position: [2, 'b'], horizontal: true, size: 4
     expect(
       player.check_for_boundary_collisions(ship)
     ).to eq false
   end
 
   it 'checks for collisions with other ships' do
-    player = Player.new("Mike", 3, [2])
+    player = Player.new('Mike', 3, [2])
     player.place_ships
-    ship = double :Ship, position: [2, "b"], horizontal: true, size: 2
+    ship = double :Ship, position: [2, 'b'], horizontal: true, size: 2
     expect(
       player.check_for_ship_collisions(ship)
     ).to eq false
   end
 
   context '=> shoot_at returns correct value' do
-    player_1 = Player.new("Mike", 3, [2])
-    player_2 = Player.new("Steve", 3, [2])
+    player_1 = Player.new('Mike', 3, [2])
+    player_2 = Player.new('Steve', 3, [2])
     player_1.place_ships
     player_2.place_ships
 
     it 'returns hit if ship is hit' do
-      shot_position = [2, "c"]
+      shot_position = [2, 'c']
       expect(
         player_1.shoot_at(player_2, shot_position)
-      ).to eq "Hit"
+      ).to eq 'Hit'
     end
 
     it 'returns miss if no ship at chose location' do
-      shot_position = [2, "a"]
+      shot_position = [2, 'a']
       expect(
         player_1.shoot_at(player_2, shot_position)
-      ).to eq "Miss"
+      ).to eq 'Miss'
     end
 
     it 'returns false for duplicate shots' do
-      shot_position = [2, "c"]
+      shot_position = [2, 'c']
       player_1.shoot_at(player_2, shot_position)
       expect(
         player_1.shoot_at(player_2, shot_position)
@@ -81,39 +83,40 @@ RSpec.describe Player do
     end
 
     it 'returns sunk after the final hit on a ship' do
-      player_1 = Player.new("Mike", 3, [2])
-      player_2 = Player.new("Steve", 3, [2])
+      player_1 = Player.new('Mike', 3, [2])
+      player_2 = Player.new('Steve', 3, [2])
       player_1.place_ships
       player_2.place_ships
-      player_1.shoot_at(player_2, [2, "b"])
+      player_1.shoot_at(player_2, [2, 'b'])
       expect(
-        player_1.shoot_at(player_2, [2, "c"])
-      ).to eq "Sunk"
+        player_1.shoot_at(player_2, [2, 'c'])
+      ).to eq 'Sunk'
     end
   end
 
   context '=> shot history implementation' do
     it 'returns shot history as an array' do
-      player_1 = Player.new("Mike", 3, [2])
-      player_2 = Player.new("Steve", 3, [2])
+      player_1 = Player.new('Mike', 3, [2])
+      player_2 = Player.new('Steve', 3, [2])
       player_1.place_ships
       player_2.place_ships
-      position_1 = [2, "a"]
-      position_2 = [2, "c"]
+      position_1 = [2, 'a']
+      position_2 = [2, 'c']
       player_1.shoot_at(player_2, position_1)
       player_1.shoot_at(player_2, position_2)
       expect(
         player_1.shot_history
-      ).to eq({player_2=>[{:result=>"Miss",:position=>position_1},{:result=>"Hit",:position=>position_2}]})
+      ).to eq({ player_2 => [{ result: 'Miss', position: position_1 },
+                             { result: 'Hit', position: position_2 }] })
     end
 
     it 'draws shot history' do
-      player_1 = Player.new("Mike", 3, [2])
-      player_2 = Player.new("Steve", 3, [2])
+      player_1 = Player.new('Mike', 3, [2])
+      player_2 = Player.new('Steve', 3, [2])
       player_1.place_ships
       player_2.place_ships
-      position_1 = [2, "a"]
-      position_2 = [2, "c"]
+      position_1 = [2, 'a']
+      position_2 = [2, 'c']
       player_1.shoot_at(player_2, position_1)
       player_1.shoot_at(player_2, position_2)
       expect(
